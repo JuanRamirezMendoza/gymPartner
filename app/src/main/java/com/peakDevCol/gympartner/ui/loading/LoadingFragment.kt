@@ -12,7 +12,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.peakDevCol.gympartner.R
 import com.peakDevCol.gympartner.databinding.FragmentLoadingBinding
-import com.peakDevCol.gympartner.ui.login.LoginViewModel.Companion.navigateToNextScreen
+import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountViewModel.Companion.navigateToNextScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

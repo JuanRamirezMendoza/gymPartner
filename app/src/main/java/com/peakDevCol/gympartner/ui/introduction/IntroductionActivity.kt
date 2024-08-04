@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.peakDevCol.gympartner.databinding.ActivityIntroductionBinding
-import com.peakDevCol.gympartner.ui.login.LoginActivity
+import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -64,12 +64,12 @@ class IntroductionActivity : AppCompatActivity() {
     }
 
     private fun goToSignIn() {
-        startActivity(LoginActivity.create(this, "signIn"))
+        startActivity(BaseFirstStepAccountActivity.create(this, "signIn"))
 
     }
 
     private fun goToLogin() {
-        startActivity(LoginActivity.create(this, "Login"))
+        startActivity(BaseFirstStepAccountActivity.create(this, "Login"))
 
     }
 
