@@ -127,6 +127,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tilConfirmPassword" />
 
+
+            <include
+                android:id="@+id/viewBottom"
+                layout="@layout/view_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/btnCreateAcount" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
@@ -135,10 +144,10 @@
         android:id="@+id/pbLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:indicatorColor="@color/primary"
-        app:indicatorSize="48dp"
-        app:indicatorInset="16dp"
         android:indeterminate="true"
+        app:indicatorColor="@color/primary"
+        app:indicatorInset="16dp"
+        app:indicatorSize="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

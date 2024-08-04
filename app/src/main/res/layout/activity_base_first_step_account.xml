@@ -30,18 +30,12 @@
         android:foregroundGravity="center"
         android:keepScreenOn="true"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/viewBottom"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewHeader"
         app:navGraph="@navigation/login_nav"
         tools:layout="@layout/fragment_loading" />
 
-    <include
-        android:id="@+id/viewBottom"
-        layout="@layout/view_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
