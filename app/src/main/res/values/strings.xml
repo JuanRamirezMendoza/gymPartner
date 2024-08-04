@@ -3,9 +3,13 @@
     <string name="app_name">GymPartner</string>
     <string name="iniciar_sesion">Iniciar Sesion</string>
     <string name="crear_cuenta">Crear Cuenta</string>
-    <string name="msg_sign_in">No tienes cuenta? ¡Únete a GymPartner!</string>
+    <string name="msg_sign_in">No tienes cuenta?\n¡Únete a GymPartner!</string>
     <string name="m_s_fitness_que_nunca">¡Más fitness que nunca!</string>
-    <string name="contrase_a">Contraseña</string>
+    <string name="password">Contraseña</string>
     <string name="email">Email</string>
+    <string name="confirm_password">Confirma contraseña</string>
+    <string name="full_name">Nombre completo</string>
+    <string name="forgot_password">Olvidaste la contraseña</string>
+    <string name="login_with">Inicie con</string>
 
 </resources>
