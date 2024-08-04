@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "519187967548",
+    "project_id": "gympartnerpd",
+    "storage_bucket": "gympartnerpd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519187967548:android:714c47c855e94d173fdd39",
+        "android_client_info": {
+          "package_name": "com.peakDevCol.gympartner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "519187967548-q25gpfgudqr2mqd2va3jeli88ar4d1dn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.peakDevCol.gympartner",
+            "certificate_hash": "bea1355feb91a811bedf05600b7debb783b5f240"
+          }
+        },
+        {
+          "client_id": "519187967548-sdoin7msq1oleova34t4cqqpg6018dj1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmtpfGOVyAZ2RQMEM3kW88v2zhlo7yc_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "519187967548-sdoin7msq1oleova34t4cqqpg6018dj1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
