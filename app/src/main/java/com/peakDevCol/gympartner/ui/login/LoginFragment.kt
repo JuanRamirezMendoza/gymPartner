@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.peakDevCol.gympartner.R
 import com.peakDevCol.gympartner.core.ex.dismissKeyboard
 import com.peakDevCol.gympartner.core.ex.loseFocusAfterAction
 import com.peakDevCol.gympartner.core.ex.onTextChanged
@@ -93,8 +94,8 @@ class LoginFragment : Fragment() {
 
     private fun updateUi(viewState: LoginViewState) {
         with(binding) {
-            tilEmail.error = if (viewState.isValidEmail) null else "email"
-            tilPassword.error = if (viewState.isValidPassword) null else "password"
+            tilEmail.error = if (viewState.isValidEmail) null else requireActivity().getString(R.string.wrong_email)
+            tilPassword.error = if (viewState.isValidPassword) null else requireActivity().getString(R.string.wrong_password)
         }
     }
 
