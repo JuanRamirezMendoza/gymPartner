@@ -15,6 +15,7 @@ import com.peakDevCol.gympartner.core.ex.dismissKeyboard
 import com.peakDevCol.gympartner.core.ex.loseFocusAfterAction
 import com.peakDevCol.gympartner.core.ex.onTextChanged
 import com.peakDevCol.gympartner.databinding.FragmentLoginBinding
+import com.peakDevCol.gympartner.ui.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -85,6 +86,14 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+
+        loginViewModel.navigateToHome.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                goToHome()
+            }
+
+        }
+
     }
 
     private fun updateUi(viewState: LoginViewState) {
@@ -92,6 +101,11 @@ class LoginFragment : Fragment() {
             tilEmail.error = if (viewState.isValidEmail) null else requireActivity().getString(R.string.wrong_email)
             tilPassword.error = if (viewState.isValidPassword) null else requireActivity().getString(R.string.wrong_password)
         }
+    }
+
+    private fun goToHome() {
+        startActivity(HomeActivity.create(requireActivity()))
+
     }
 
 }

@@ -17,17 +17,13 @@ import javax.inject.Inject
 class LoginFragmentViewModel @Inject constructor(val loginUseCase: LoginUseCase) :
     BaseFirstStepAccountViewModel() {
 
-    private val _navigateToDetails = MutableLiveData<Event<Boolean>>()
-    val navigateToDetails: LiveData<Event<Boolean>>
-        get() = _navigateToDetails
+    private val _navigateToHome = MutableLiveData<Event<Boolean>>()
+    val navigateToHome: LiveData<Event<Boolean>>
+        get() = _navigateToHome
 
     private val _navigateToForgotPassword = MutableLiveData<Event<Boolean>>()
     val navigateToForgotPassword: LiveData<Event<Boolean>>
         get() = _navigateToForgotPassword
-
-    private val _navigateToSignIn = MutableLiveData<Event<Boolean>>()
-    val navigateToSignIn: LiveData<Event<Boolean>>
-        get() = _navigateToSignIn
 
     private val _navigateToVerifyAccount = MutableLiveData<Event<Boolean>>()
     val navigateToVerifyAccount: LiveData<Event<Boolean>>
@@ -54,7 +50,6 @@ class LoginFragmentViewModel @Inject constructor(val loginUseCase: LoginUseCase)
             onFieldsChanged(email, password)
         }
 
-
     }
 
     /**
@@ -64,18 +59,14 @@ class LoginFragmentViewModel @Inject constructor(val loginUseCase: LoginUseCase)
     private fun loginUser(email: String, password: String) {
         viewModelScope.launch {
             _viewState.value = LoginViewState(isLoading = true)
-            when (val result = loginUseCase(email, password)) {
+            when (loginUseCase(email, password)) {
                 LoginResult.Error -> {
                     //Show error
                     _viewState.value = LoginViewState(isLoading = false)
                 }
 
                 is LoginResult.Success -> {
-                    if (result.verified) {
-                        _navigateToDetails.value = Event(true)
-                    } else {
-                        _navigateToVerifyAccount.value = Event(true)
-                    }
+                    _navigateToHome.value = Event(true)
                 }
             }
             _viewState.value = LoginViewState(isLoading = false)
