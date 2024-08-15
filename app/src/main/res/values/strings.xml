@@ -1,6 +1,9 @@
 <resources>
 
     <string name="app_name">GymPartner</string>
+    <string name="web_client_id">519187967548-sdoin7msq1oleova34t4cqqpg6018dj1.apps.googleusercontent.com</string>
+
+
     <string name="iniciar_sesion">Iniciar Sesion</string>
     <string name="crear_cuenta">Crear Cuenta</string>
     <string name="msg_sign_in">No tienes cuenta?\n¡Únete a GymPartner!</string>
