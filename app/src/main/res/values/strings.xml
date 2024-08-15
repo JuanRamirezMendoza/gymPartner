@@ -13,5 +13,6 @@
     <string name="login_with">Inicie con</string>
     <string name="wrong_email">Estructura de email no valida</string>
     <string name="wrong_password">Contraseña minimo de 6 caracteres</string>
+    <string name="google">Google</string>
 
 </resources>

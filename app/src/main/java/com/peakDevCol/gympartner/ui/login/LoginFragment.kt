@@ -21,13 +21,11 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = LoginFragment()
-    }
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: LoginFragmentViewModel by viewModels()
+    private val loginViewModel: LoginFragmentViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,18 +62,17 @@ class LoginFragment : Fragment() {
 
             btnLogin.setOnClickListener {
                 it.dismissKeyboard()
-                viewModel.onLoginSelected(etEmail.text.toString(), etPassword.text.toString())
+                loginViewModel.onLoginSelected(etEmail.text.toString(), etPassword.text.toString())
             }
-
         }
 
     }
 
     private fun onFieldChanged() {
-            viewModel.onFieldsChanged(
-                email = binding.etEmail.text.toString(),
-                password = binding.etPassword.text.toString()
-            )
+        loginViewModel.onFieldsChanged(
+            email = binding.etEmail.text.toString(),
+            password = binding.etPassword.text.toString()
+        )
     }
 
     private fun initObservers() {
@@ -83,13 +80,11 @@ class LoginFragment : Fragment() {
         // lifecycle of fragment, but if you only use lifecycle the coroutine its match for activity lifecycle
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.viewState.collect { viewState ->
+                loginViewModel.viewState.collect { viewState ->
                     updateUi(viewState)
                 }
             }
         }
-
-
     }
 
     private fun updateUi(viewState: LoginViewState) {
