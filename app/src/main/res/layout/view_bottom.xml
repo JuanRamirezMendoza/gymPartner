@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:text="¡Únete a GymPartner!"
+        android:text="@string/join_gympartner"
         android:textColor="@color/secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:text="Cada dia más fuerte"
+        android:text="@string/every_day_more_strong"
         android:textColor="@color/primary"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"

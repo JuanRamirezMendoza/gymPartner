@@ -14,5 +14,7 @@
     <string name="wrong_email">Estructura de email no valida</string>
     <string name="wrong_password">Contraseña minimo de 6 caracteres</string>
     <string name="google">Google</string>
+    <string name="join_gympartner">¡Únete a GymPartner!</string>
+    <string name="every_day_more_strong">Cada dia más fuerte</string>
 
 </resources>
