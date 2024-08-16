@@ -59,7 +59,7 @@ class LoginFragmentViewModel @Inject constructor(val loginUseCase: LoginUseCase)
     private fun loginUser(email: String, password: String) {
         viewModelScope.launch {
             _viewState.value = LoginViewState(isLoading = true)
-            when (loginUseCase(email, password)) {
+            when (loginUseCase(email, password,null)) {
                 LoginResult.Error -> {
                     //Show error
                     _viewState.value = LoginViewState(isLoading = false)

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.peakDevCol.gympartner.core.Event
 import com.peakDevCol.gympartner.domain.CreateAccountUseCase
 import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountViewModel
-import com.peakDevCol.gympartner.ui.signin.model.UserSignIn
+import com.peakDevCol.gympartner.ui.signin.model.FullUserSignIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,11 +31,11 @@ class SignInViewModel @Inject constructor(val createAccountUseCase: CreateAccoun
         get() = _showError
 
 
-    fun onFieldsChanged(userSignIn: UserSignIn) {
+    fun onFieldsChanged(userSignIn: FullUserSignIn) {
         _viewState.value = userSignIn.toSignInViewState()
     }
 
-    private fun signInUser(userSignIn: UserSignIn) {
+    private fun signInUser(userSignIn: FullUserSignIn) {
         viewModelScope.launch {
             _viewState.value = SignInViewState(isLoading = true)
             val accountCreated = createAccountUseCase(userSignIn)
@@ -48,7 +48,7 @@ class SignInViewModel @Inject constructor(val createAccountUseCase: CreateAccoun
         }
     }
 
-    private fun UserSignIn.toSignInViewState(): SignInViewState {
+    private fun FullUserSignIn.toSignInViewState(): SignInViewState {
         return SignInViewState(
             isValidFullName = isValidOrEmptyName(fullName),
             isValidEmail = isValidOrEmptyEmail(email),
@@ -63,7 +63,7 @@ class SignInViewModel @Inject constructor(val createAccountUseCase: CreateAccoun
     private fun isValidOrEmptyName(fullName: String): Boolean =
         fullName.isEmpty() || fullName.length >= MIN_PASSWORD_LENGTH
 
-    fun onSignInSelected(userSignIn: UserSignIn) {
+    fun onSignInSelected(userSignIn: FullUserSignIn) {
         val viewState = userSignIn.toSignInViewState()
         if (viewState.userValidated() && userSignIn.isNotEmpty()) {
             signInUser(userSignIn)

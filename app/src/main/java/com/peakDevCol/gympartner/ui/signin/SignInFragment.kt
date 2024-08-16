@@ -16,7 +16,8 @@ import com.peakDevCol.gympartner.core.ex.loseFocusAfterAction
 import com.peakDevCol.gympartner.core.ex.onTextChanged
 import com.peakDevCol.gympartner.core.ex.toast
 import com.peakDevCol.gympartner.databinding.FragmentSignInBinding
-import com.peakDevCol.gympartner.ui.signin.model.UserSignIn
+import com.peakDevCol.gympartner.domain.ProviderTypeLogin
+import com.peakDevCol.gympartner.ui.signin.model.FullUserSignIn
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -68,11 +69,12 @@ class SignInFragment : Fragment() {
             btnCreateAcount.setOnClickListener {
                 it.dismissKeyboard()
                 signInViewModel.onSignInSelected(
-                    UserSignIn(
+                    FullUserSignIn(
                         fullName = etFullName.text.toString(),
                         email = etEmail.text.toString(),
                         password = etPassword.text.toString(),
-                        passwordConfirmation = etConfirmPassword.text.toString()
+                        passwordConfirmation = etConfirmPassword.text.toString(),
+                        type = ProviderTypeLogin.BASIC
                     )
                 )
             }
@@ -82,11 +84,12 @@ class SignInFragment : Fragment() {
     private fun onFieldChanged(hasFocus: Boolean = false) {
         if (!hasFocus) {
             signInViewModel.onFieldsChanged(
-                UserSignIn(
+                FullUserSignIn(
                     fullName = binding.etFullName.text.toString(),
                     email = binding.etEmail.text.toString(),
                     password = binding.etPassword.text.toString(),
-                    passwordConfirmation = binding.etConfirmPassword.text.toString()
+                    passwordConfirmation = binding.etConfirmPassword.text.toString(),
+                    type = ProviderTypeLogin.BASIC
                 )
             )
         }
