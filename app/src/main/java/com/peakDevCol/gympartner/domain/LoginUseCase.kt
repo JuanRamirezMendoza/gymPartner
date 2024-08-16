@@ -15,7 +15,12 @@ class LoginUseCase @Inject constructor(private val authService: AuthService) {
      * invoke it's a type of function that you can use only call the instance of class
      * for example, loginUseCase(juan@prueba.com, 123456)
      **/
-    suspend operator fun invoke(email: String, password: String): LoginResult =
-        authService.login(email, password)
+    suspend operator fun invoke(
+        email: String?,
+        password: String?,
+        idTokenString: String ?
+    ): LoginResult {
+        return authService.login(email, password, idTokenString)
+    }
 
 }
