@@ -6,9 +6,16 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.lifecycle.lifecycleScope
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.peakDevCol.gympartner.databinding.ActivityIntroductionBinding
 import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountActivity
+import com.peakDevCol.gympartner.ui.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class IntroductionActivity : AppCompatActivity() {
@@ -16,6 +23,12 @@ class IntroductionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroductionBinding
 
     private val introductionViewModel: IntroductionViewModel by viewModels()
+
+    @Inject
+    lateinit var getGoogleIdOption: GetGoogleIdOption
+
+    @Inject
+    lateinit var credentialManager: CredentialManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,9 +58,21 @@ class IntroductionActivity : AppCompatActivity() {
             introductionViewModel.onSingInSelected()
         }
 
+        binding.googleBtn.setOnClickListener {
+            introductionViewModel.onGoogleSelected()
+        }
+
     }
 
     private fun initObservers() {
+
+        introductionViewModel.navigateToMenu.observe(this) {
+            it.getContentIfNotHandled()?.let { hasCurrentUser ->
+                if (hasCurrentUser)
+                    goToHome()
+            }
+        }
+
         introductionViewModel.navigateToLogin.observe(this) { event ->
             event.getContentIfNotHandled()?.let {
                 goToLogin()
@@ -60,6 +85,25 @@ class IntroductionActivity : AppCompatActivity() {
                 goToSignIn()
             }
         }
+
+        introductionViewModel.googleSelected.observe(this) {
+            it.getContentIfNotHandled()?.let {
+                getCredentialRequest()
+            }
+        }
+    }
+
+    private fun getCredentialRequest() {
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(getGoogleIdOption)
+            .build()
+        lifecycleScope.launch {
+            introductionViewModel.getCredentials(this@IntroductionActivity, request)
+        }
+    }
+
+    private fun goToHome() {
+        startActivity(HomeActivity.create(this))
 
     }
 
