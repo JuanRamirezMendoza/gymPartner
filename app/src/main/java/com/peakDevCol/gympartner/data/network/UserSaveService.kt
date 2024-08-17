@@ -2,8 +2,6 @@ package com.peakDevCol.gympartner.data.network
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.peakDevCol.gympartner.domain.ProviderTypeLogin
-import com.peakDevCol.gympartner.ui.signin.model.BaseUserSignIn
-import com.peakDevCol.gympartner.ui.signin.model.FullUserSignIn
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -18,7 +16,7 @@ class UserSaveService @Inject constructor(private val firebaseFireStore: Firebas
             .document(type!!)
             .collection(type + USER_COLLECTION)
 
-        if (type == ProviderTypeLogin.GOOGLE.name){
+        if (type == ProviderTypeLogin.GOOGLE.name) {
             val querySnapshot = userCollectionRef
                 .whereEqualTo("email", user["email"])
                 .get()

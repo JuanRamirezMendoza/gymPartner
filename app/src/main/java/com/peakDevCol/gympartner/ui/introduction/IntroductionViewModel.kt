@@ -15,7 +15,6 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.peakDevCol.gympartner.core.Event
 import com.peakDevCol.gympartner.data.response.LoginResult
-import com.peakDevCol.gympartner.domain.CreateAccountUseCase
 import com.peakDevCol.gympartner.domain.LoginUseCase
 import com.peakDevCol.gympartner.domain.ProviderTypeLogin
 import com.peakDevCol.gympartner.domain.SaveAccountUseCase

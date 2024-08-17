@@ -1,6 +1,5 @@
 package com.peakDevCol.gympartner.domain
 
-import com.peakDevCol.gympartner.data.network.UserSaveService
 import com.peakDevCol.gympartner.data.repository.SignInRepository
 import com.peakDevCol.gympartner.ui.signin.model.BaseUserSignIn
 import javax.inject.Inject
