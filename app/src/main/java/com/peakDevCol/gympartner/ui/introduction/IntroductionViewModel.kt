@@ -51,6 +51,10 @@ class IntroductionViewModel @Inject constructor(
     val googleSelected: LiveData<Event<Boolean>>
         get() = _googleSelected
 
+    private val _showError = MutableLiveData<Event<Boolean>>()
+    val showError: LiveData<Event<Boolean>>
+        get() = _showError
+
 
     fun onLoginSelected() {
         _navigateToLogin.value = Event(content = true)
@@ -77,7 +81,7 @@ class IntroductionViewModel @Inject constructor(
                         viewModelScope.launch {
                             when (loginUseCase(email = null, password = null, idTokenString)) {
                                 LoginResult.Error -> {
-                                    //Manejar el error
+                                    _showError.value = Event(true)
                                 }
 
                                 is LoginResult.Success -> {

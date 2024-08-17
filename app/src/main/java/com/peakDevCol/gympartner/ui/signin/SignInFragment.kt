@@ -11,6 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.peakDevCol.gympartner.R
+import com.peakDevCol.gympartner.core.dialog.BasicDialog
 import com.peakDevCol.gympartner.core.ex.dismissKeyboard
 import com.peakDevCol.gympartner.core.ex.loseFocusAfterAction
 import com.peakDevCol.gympartner.core.ex.onTextChanged
@@ -104,14 +106,30 @@ class SignInFragment : Fragment() {
             }
         }
 
-        signInViewModel.showError.observe(viewLifecycleOwner) {
-            if (it) requireActivity().toast("Error")
+        signInViewModel.showError.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                showError()
+
+            }
         }
 
         signInViewModel.navigateToOtherScreen.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let {
                 requireActivity().toast("Navega a otra pantalla")
             }
+        }
+
+    }
+
+    private fun showError() {
+        BasicDialog.create(
+            requireContext(),
+            resources.getDrawable(R.drawable.dialog_bg, requireActivity().theme),
+            resources.getString(R.string.title_sign_in),
+            resources.getString(R.string.supporting_text_sign_in),
+            resources.getString(R.string.accept_sign_in)
+        ) {
+            it.dismiss()
         }
 
     }

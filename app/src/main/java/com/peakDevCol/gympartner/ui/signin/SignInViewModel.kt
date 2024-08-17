@@ -26,10 +26,9 @@ class SignInViewModel @Inject constructor(val createAccountUseCase: CreateAccoun
     val navigateToOtherScreen: LiveData<Event<Boolean>>
         get() = _navigateToOtherScreen
 
-    private var _showError = MutableLiveData(false)
-    val showError: LiveData<Boolean>
+    private val _showError = MutableLiveData<Event<Boolean>>()
+    val showError: LiveData<Event<Boolean>>
         get() = _showError
-
 
     fun onFieldsChanged(userSignIn: FullUserSignIn) {
         _viewState.value = userSignIn.toSignInViewState()
@@ -42,7 +41,7 @@ class SignInViewModel @Inject constructor(val createAccountUseCase: CreateAccoun
             if (accountCreated) {
                 _navigateToOtherScreen.value = Event(true)
             } else {
-                _showError.value = true
+                _showError.value = Event(true)
             }
             _viewState.value = SignInViewState(isLoading = false)
         }

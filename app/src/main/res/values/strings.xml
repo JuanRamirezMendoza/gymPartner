@@ -3,9 +3,11 @@
     <string name="app_name">GymPartner</string>
     <string name="web_client_id">519187967548-sdoin7msq1oleova34t4cqqpg6018dj1.apps.googleusercontent.com</string>
 
-
-    <string name="iniciar_sesion">Iniciar Sesion</string>
+    <!--     Introduction buttons     !-->
     <string name="crear_cuenta">Crear Cuenta</string>
+    <string name="iniciar_sesion">Iniciar Sesion</string>
+
+
     <string name="msg_sign_in">No tienes cuenta?\n¡Únete a GymPartner!</string>
     <string name="m_s_fitness_que_nunca">¡Más fitness que nunca!</string>
     <string name="password">Contraseña</string>
@@ -19,5 +21,21 @@
     <string name="google">Google</string>
     <string name="join_gympartner">¡Únete a GymPartner!</string>
     <string name="every_day_more_strong">Cada dia más fuerte</string>
+
+    <!--     Dialog error Login      !-->
+    <string name="accept_login">Aceptar</string>
+    <string name="title_login">¡Ups!</string>
+    <string name="supporting_text_login">Verifica los datos y vuelve a intentarlo :)</string>
+
+    <!--     Dialog error SignIn      !-->
+    <string name="accept_sign_in">Aceptar</string>
+    <string name="title_sign_in">¡Ups!</string>
+    <string name="supporting_text_sign_in">Este correo ya esta registrado</string>
+
+    <!--     Dialog error google Login      !-->
+    <string name="accept_login_google">Aceptar</string>
+    <string name="title_login_google">¡Ups!, Error inesperado</string>
+    <string name="supporting_text_login_google">Vuelve a intentarlo y verifica tu conexion a internet</string>
+
 
 </resources>

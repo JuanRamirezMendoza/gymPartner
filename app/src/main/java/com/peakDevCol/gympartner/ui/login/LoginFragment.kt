@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.peakDevCol.gympartner.R
+import com.peakDevCol.gympartner.core.dialog.BasicDialog
 import com.peakDevCol.gympartner.core.ex.dismissKeyboard
 import com.peakDevCol.gympartner.core.ex.loseFocusAfterAction
 import com.peakDevCol.gympartner.core.ex.onTextChanged
@@ -94,6 +95,32 @@ class LoginFragment : Fragment() {
 
         }
 
+        loginViewModel.showError.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                showError()
+            }
+        }
+
+    }
+
+
+    /**
+     * Remember that in this place arrive de parameter for the lambda
+     * In this case it a parameter the type DialogInterface
+     * and if the lambda return a value for example -> (value of return)Int
+     * in the last line into the lambda y need put de value of return for the example is a Int
+     */
+
+    private fun showError() {
+        BasicDialog.create(
+            requireContext(),
+            resources.getDrawable(R.drawable.dialog_bg, requireActivity().theme),
+            resources.getString(R.string.title_login),
+            resources.getString(R.string.supporting_text_login),
+            resources.getString(R.string.accept_login)
+        ) {
+            it.dismiss()
+        }
     }
 
     private fun updateUi(viewState: LoginViewState) {

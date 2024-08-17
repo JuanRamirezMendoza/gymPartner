@@ -29,6 +29,10 @@ class LoginFragmentViewModel @Inject constructor(val loginUseCase: LoginUseCase)
     val navigateToVerifyAccount: LiveData<Event<Boolean>>
         get() = _navigateToVerifyAccount
 
+    private val _showError = MutableLiveData<Event<Boolean>>()
+    val showError: LiveData<Event<Boolean>>
+        get() = _showError
+
     private val _viewState = MutableStateFlow(LoginViewState())
     val viewState: StateFlow<LoginViewState>
         get() = _viewState
@@ -59,9 +63,9 @@ class LoginFragmentViewModel @Inject constructor(val loginUseCase: LoginUseCase)
     private fun loginUser(email: String, password: String) {
         viewModelScope.launch {
             _viewState.value = LoginViewState(isLoading = true)
-            when (loginUseCase(email, password,null)) {
+            when (loginUseCase(email, password, null)) {
                 LoginResult.Error -> {
-                    //Show error
+                    _showError.value = Event(true)
                     _viewState.value = LoginViewState(isLoading = false)
                 }
 

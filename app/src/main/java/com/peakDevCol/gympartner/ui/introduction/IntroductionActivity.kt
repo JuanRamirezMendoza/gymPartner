@@ -10,6 +10,8 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.lifecycle.lifecycleScope
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.peakDevCol.gympartner.R
+import com.peakDevCol.gympartner.core.dialog.BasicDialog
 import com.peakDevCol.gympartner.databinding.ActivityIntroductionBinding
 import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountActivity
 import com.peakDevCol.gympartner.ui.home.HomeActivity
@@ -90,6 +92,24 @@ class IntroductionActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let {
                 getCredentialRequest()
             }
+        }
+
+        introductionViewModel.showError.observe(this){
+            it.getContentIfNotHandled()?.let {
+                showError()
+            }
+        }
+    }
+
+    private fun showError() {
+        BasicDialog.create(
+            this,
+            resources.getDrawable(R.drawable.dialog_bg, this.theme),
+            resources.getString(R.string.title_login_google),
+            resources.getString(R.string.supporting_text_login_google),
+            resources.getString(R.string.accept_login_google)
+        ) {
+            it.dismiss()
         }
     }
 
