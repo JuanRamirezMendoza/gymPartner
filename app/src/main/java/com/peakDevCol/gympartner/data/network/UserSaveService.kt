@@ -1,26 +1,34 @@
 package com.peakDevCol.gympartner.data.network
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.peakDevCol.gympartner.ui.signin.model.UserSignIn
+import com.peakDevCol.gympartner.domain.ProviderTypeLogin
+import com.peakDevCol.gympartner.ui.signin.model.BaseUserSignIn
+import com.peakDevCol.gympartner.ui.signin.model.FullUserSignIn
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class UserSaveService @Inject constructor(private val firebaseFireStore: FirebaseFirestore) {
     companion object {
-        const val USER_COLLECTION = "users"
+        const val USER_COLLECTION = "USERS"
     }
 
-    suspend fun createUserTable(userSignIn: UserSignIn) = runCatching {
+    suspend fun createUserTable(user: HashMap<String, String>) = runCatching {
+        val type = user["type"]
+        val userCollectionRef = firebaseFireStore.collection(USER_COLLECTION)
+            .document(type!!)
+            .collection(type + USER_COLLECTION)
 
-        val user = hashMapOf(
-            "fullName" to userSignIn.fullName,
-            "email" to userSignIn.email,
-            "password" to userSignIn.password,
-            "passwordConfirmation" to userSignIn.passwordConfirmation,
-        )
+        if (type == ProviderTypeLogin.GOOGLE.name){
+            val querySnapshot = userCollectionRef
+                .whereEqualTo("email", user["email"])
+                .get()
+                .await()
+            if (!querySnapshot.isEmpty) {
+                throw Exception("El usuario ya existe en la colección.")
+            }
+        }
+        userCollectionRef.add(user).await()
 
-        firebaseFireStore.collection(USER_COLLECTION)
-            .add(user).await()
     }.isSuccess
 
 }
