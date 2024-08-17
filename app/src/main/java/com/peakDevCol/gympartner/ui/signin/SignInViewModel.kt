@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.peakDevCol.gympartner.core.Event
 import com.peakDevCol.gympartner.domain.CreateAccountUseCase
 import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountViewModel
+import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountViewState
 import com.peakDevCol.gympartner.ui.signin.model.FullUserSignIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,28 +23,29 @@ class SignInViewModel @Inject constructor(val createAccountUseCase: CreateAccoun
     val viewState: StateFlow<SignInViewState>
         get() = _viewState
 
-    private val _navigateToOtherScreen = MutableLiveData<Event<Boolean>>()
-    val navigateToOtherScreen: LiveData<Event<Boolean>>
-        get() = _navigateToOtherScreen
+    private val _navigateToHome = MutableLiveData<Event<Boolean>>()
+    val navigateToHome: LiveData<Event<Boolean>>
+        get() = _navigateToHome
 
-    private val _showError = MutableLiveData<Event<Boolean>>()
-    val showError: LiveData<Event<Boolean>>
-        get() = _showError
 
     fun onFieldsChanged(userSignIn: FullUserSignIn) {
         _viewState.value = userSignIn.toSignInViewState()
     }
 
-    private fun signInUser(userSignIn: FullUserSignIn) {
+    private fun signInUser(
+        userSignIn: FullUserSignIn,
+        baseStateError: () -> Unit,
+        baseStateLoading: (loading: BaseFirstStepAccountViewState?) -> Unit
+    ) {
         viewModelScope.launch {
-            _viewState.value = SignInViewState(isLoading = true)
+            baseStateLoading.invoke(BaseFirstStepAccountViewState.Loading)
             val accountCreated = createAccountUseCase(userSignIn)
             if (accountCreated) {
-                _navigateToOtherScreen.value = Event(true)
+                _navigateToHome.value = Event(true)
+                baseStateLoading.invoke(null)
             } else {
-                _showError.value = Event(true)
+                baseStateError.invoke()
             }
-            _viewState.value = SignInViewState(isLoading = false)
         }
     }
 
@@ -62,14 +64,23 @@ class SignInViewModel @Inject constructor(val createAccountUseCase: CreateAccoun
     private fun isValidOrEmptyName(fullName: String): Boolean =
         fullName.isEmpty() || fullName.length >= MIN_PASSWORD_LENGTH
 
-    fun onSignInSelected(userSignIn: FullUserSignIn) {
+    fun onSignInSelected(
+        userSignIn: FullUserSignIn,
+        baseStateError: () -> Unit,
+        baseStateLoading: (loading: BaseFirstStepAccountViewState?) -> Unit
+    ) {
         val viewState = userSignIn.toSignInViewState()
         if (viewState.userValidated() && userSignIn.isNotEmpty()) {
-            signInUser(userSignIn)
+            signInUser(userSignIn, {
+                baseStateError.invoke()
+            }, {
+                baseStateLoading.invoke(it)
+            })
         } else {
             onFieldsChanged(userSignIn)
         }
     }
+
 
 }
 
