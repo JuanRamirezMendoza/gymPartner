@@ -18,6 +18,7 @@ import com.peakDevCol.gympartner.data.response.LoginResult
 import com.peakDevCol.gympartner.domain.CreateAccountUseCase
 import com.peakDevCol.gympartner.domain.LoginUseCase
 import com.peakDevCol.gympartner.domain.ProviderTypeLogin
+import com.peakDevCol.gympartner.domain.SaveAccountUseCase
 import com.peakDevCol.gympartner.ui.signin.model.UserSignIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ class IntroductionViewModel @Inject constructor(
     private val authFireBase: FirebaseAuth,
     private val credentialManager: CredentialManager,
     private val loginUseCase: LoginUseCase,
-    private val createAccountUseCase: CreateAccountUseCase
+    private val saveAccountUseCase: SaveAccountUseCase
 ) : ViewModel() {
 
     private val _navigateToMenu = MutableLiveData<Event<Boolean>>()
@@ -87,7 +88,7 @@ class IntroductionViewModel @Inject constructor(
                                         userData.email ?: "",
                                         ProviderTypeLogin.GOOGLE
                                     )
-                                    createAccountUseCase(userSignIn)
+                                    saveAccountUseCase(userSignIn)
                                     _navigateToMenu.value = Event(true)
                                 }
                             }
