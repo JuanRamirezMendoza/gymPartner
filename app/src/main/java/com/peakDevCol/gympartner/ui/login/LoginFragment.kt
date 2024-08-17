@@ -1,21 +1,24 @@
 package com.peakDevCol.gympartner.ui.login
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.peakDevCol.gympartner.R
-import com.peakDevCol.gympartner.core.dialog.BasicDialog
 import com.peakDevCol.gympartner.core.ex.dismissKeyboard
 import com.peakDevCol.gympartner.core.ex.loseFocusAfterAction
 import com.peakDevCol.gympartner.core.ex.onTextChanged
 import com.peakDevCol.gympartner.databinding.FragmentLoginBinding
+import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountViewModel
+import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountViewState
 import com.peakDevCol.gympartner.ui.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,6 +30,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val loginViewModel: LoginFragmentViewModel by viewModels()
+    private val baseFirstStepAccountViewModel: BaseFirstStepAccountViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -64,7 +68,13 @@ class LoginFragment : Fragment() {
 
             btnLogin.setOnClickListener {
                 it.dismissKeyboard()
-                loginViewModel.onLoginSelected(etEmail.text.toString(), etPassword.text.toString())
+                loginViewModel.onLoginSelected(etEmail.text.toString(), etPassword.text.toString(),
+                    {
+                        baseFirstStepAccountViewModel.setBaseViewState(infoError())
+                    }, { loading ->
+                        baseFirstStepAccountViewModel.setBaseViewState(loading)
+
+                    })
             }
         }
 
@@ -95,44 +105,31 @@ class LoginFragment : Fragment() {
 
         }
 
-        loginViewModel.showError.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let {
-                showError()
-            }
-        }
-
     }
 
-
-    /**
-     * Remember that in this place arrive de parameter for the lambda
-     * In this case it a parameter the type DialogInterface
-     * and if the lambda return a value for example -> (value of return)Int
-     * in the last line into the lambda y need put de value of return for the example is a Int
-     */
-
-    private fun showError() {
-        BasicDialog.create(
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun infoError(): BaseFirstStepAccountViewState.Error {
+        return BaseFirstStepAccountViewState.Error(
             requireContext(),
             resources.getDrawable(R.drawable.dialog_bg, requireActivity().theme),
             resources.getString(R.string.title_login),
             resources.getString(R.string.supporting_text_login),
             resources.getString(R.string.accept_login)
-        ) {
-            it.dismiss()
-        }
+        )
+
     }
 
     private fun updateUi(viewState: LoginViewState) {
         with(binding) {
-            tilEmail.error = if (viewState.isValidEmail) null else requireActivity().getString(R.string.wrong_email)
-            tilPassword.error = if (viewState.isValidPassword) null else requireActivity().getString(R.string.wrong_password)
+            tilEmail.error =
+                if (viewState.isValidEmail) null else requireActivity().getString(R.string.wrong_email)
+            tilPassword.error =
+                if (viewState.isValidPassword) null else requireActivity().getString(R.string.wrong_password)
         }
     }
 
     private fun goToHome() {
         startActivity(HomeActivity.create(requireActivity()))
-
     }
 
 }
