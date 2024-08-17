@@ -8,15 +8,24 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.peakDevCol.gympartner.R
+import com.peakDevCol.gympartner.core.dialog.BasicDialog
 import com.peakDevCol.gympartner.databinding.ActivityBaseFirstStepAccountBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BaseFirstStepAccountActivity : AppCompatActivity() {
     companion object {
         fun create(context: Context, navigation: String): Intent {
-            return Intent(context, BaseFirstStepAccountActivity::class.java).putExtra("navigation", navigation)
+            return Intent(context, BaseFirstStepAccountActivity::class.java).putExtra(
+                "navigation",
+                navigation
+            )
         }
     }
 
@@ -34,6 +43,47 @@ class BaseFirstStepAccountActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        initUi()
         baseFirstStepAccountViewModel.nextScreenSelected(intent.extras?.getString("navigation")!!)
     }
+
+    private fun initUi() {
+        initObservers()
+    }
+
+    private fun initObservers() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                baseFirstStepAccountViewModel.baseViewState.collect { viewState ->
+                    updateUi(viewState)
+                }
+            }
+        }
+    }
+
+    private fun updateUi(viewState: BaseFirstStepAccountViewState?) {
+        when (viewState) {
+            is BaseFirstStepAccountViewState.Error -> {
+                showError(viewState)
+            }
+
+            BaseFirstStepAccountViewState.Loading -> binding.pbLoading.isVisible = true
+            null -> binding.pbLoading.isVisible = false
+        }
+
+    }
+
+    private fun showError(infoError: BaseFirstStepAccountViewState.Error) {
+        binding.pbLoading.isVisible = false
+        BasicDialog.create(
+            infoError.context,
+            infoError.background,
+            infoError.title,
+            infoError.msg,
+            infoError.positiveMsg,
+        ) {
+            it.dismiss()
+        }
+    }
+
 }

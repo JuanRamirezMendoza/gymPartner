@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.peakDevCol.gympartner.core.Event
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 
 open class BaseFirstStepAccountViewModel : ViewModel() {
@@ -17,6 +19,14 @@ open class BaseFirstStepAccountViewModel : ViewModel() {
         private val _navigateToNextScreen = MutableLiveData<Event<String>>()
         val navigateToNextScreen: LiveData<Event<String>>
             get() = _navigateToNextScreen
+    }
+
+    private val _baseViewState = MutableStateFlow<BaseFirstStepAccountViewState?>(null)
+    val baseViewState: StateFlow<BaseFirstStepAccountViewState?>
+        get() = _baseViewState
+
+    fun setBaseViewState(state: BaseFirstStepAccountViewState?) {
+        _baseViewState.value = state
     }
 
     fun nextScreenSelected(screen: String) {
