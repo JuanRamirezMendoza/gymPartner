@@ -20,6 +20,8 @@ import com.peakDevCol.gympartner.domain.ProviderTypeLogin
 import com.peakDevCol.gympartner.domain.SaveAccountUseCase
 import com.peakDevCol.gympartner.ui.signin.model.UserSignIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +32,11 @@ class IntroductionViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val saveAccountUseCase: SaveAccountUseCase
 ) : ViewModel() {
+
+
+    private val _viewState = MutableStateFlow<IntroductionViewState?>(null)
+    val viewState: StateFlow<IntroductionViewState?>
+        get() = _viewState
 
     private val _navigateToMenu = MutableLiveData<Event<Boolean>>()
     val navigateToMenu: LiveData<Event<Boolean>>
@@ -51,10 +58,6 @@ class IntroductionViewModel @Inject constructor(
     val googleSelected: LiveData<Event<Boolean>>
         get() = _googleSelected
 
-    private val _showError = MutableLiveData<Event<Boolean>>()
-    val showError: LiveData<Event<Boolean>>
-        get() = _showError
-
 
     fun onLoginSelected() {
         _navigateToLogin.value = Event(content = true)
@@ -70,6 +73,7 @@ class IntroductionViewModel @Inject constructor(
     }
 
     private fun handleSignIn(result: GetCredentialResponse) {
+        _viewState.value = IntroductionViewState.Loading
         when (val credential = result.credential) {
             // GoogleIdToken credential
             is CustomCredential -> {
@@ -81,7 +85,8 @@ class IntroductionViewModel @Inject constructor(
                         viewModelScope.launch {
                             when (loginUseCase(email = null, password = null, idTokenString)) {
                                 LoginResult.Error -> {
-                                    _showError.value = Event(true)
+                                    _viewState.value = IntroductionViewState.Error
+                                    _viewState.value = null
                                 }
 
                                 is LoginResult.Success -> {
@@ -93,6 +98,7 @@ class IntroductionViewModel @Inject constructor(
                                     )
                                     saveAccountUseCase(userSignIn)
                                     _navigateToMenu.value = Event(true)
+                                    _viewState.value = null
                                 }
                             }
                         }

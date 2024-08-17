@@ -6,9 +6,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.peakDevCol.gympartner.R
 import com.peakDevCol.gympartner.core.dialog.BasicDialog
@@ -94,10 +97,20 @@ class IntroductionActivity : AppCompatActivity() {
             }
         }
 
-        introductionViewModel.showError.observe(this){
-            it.getContentIfNotHandled()?.let {
-                showError()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                introductionViewModel.viewState.collect { viewState ->
+                    updateUi(viewState)
+                }
             }
+        }
+    }
+
+    private fun updateUi(viewState: IntroductionViewState?) {
+        when (viewState) {
+            IntroductionViewState.Error -> showError()
+            IntroductionViewState.Loading -> binding.pbLoading.isVisible = true
+            null -> binding.pbLoading.isVisible = false
         }
     }
 
