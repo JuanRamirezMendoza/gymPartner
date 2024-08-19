@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".GymPartnerApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,14 +16,24 @@
         android:theme="@style/Theme.GymPartner"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".ui.firstscreen.FirstScreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GymPartner.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.basefirststepaccount.BaseFirstStepAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.introduction.IntroductionActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
