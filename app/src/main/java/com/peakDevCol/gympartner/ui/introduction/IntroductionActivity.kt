@@ -1,5 +1,7 @@
 package com.peakDevCol.gympartner.ui.introduction
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -34,6 +36,11 @@ class IntroductionActivity : AppCompatActivity() {
 
     @Inject
     lateinit var credentialManager: CredentialManager
+
+    companion object {
+        fun create(context: Context) = Intent(context, IntroductionActivity::class.java)
+
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

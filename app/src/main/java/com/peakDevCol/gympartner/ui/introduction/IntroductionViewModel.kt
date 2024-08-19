@@ -42,10 +42,6 @@ class IntroductionViewModel @Inject constructor(
     val navigateToMenu: LiveData<Event<Boolean>>
         get() = _navigateToMenu
 
-    init {
-        _navigateToMenu.value = Event(content = (authFireBase.currentUser != null))
-    }
-
     private val _navigateToLogin = MutableLiveData<Event<Boolean>>()
     val navigateToLogin: LiveData<Event<Boolean>>
         get() = _navigateToLogin

@@ -23,7 +23,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -57,7 +60,7 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
     //Splash
-    implementation (libs.androidx.core.splashscreen)
+    implementation(libs.androidx.core.splashscreen)
     // Fragment
     implementation(libs.androidx.fragment.ktx)
     // Activity
@@ -75,7 +78,7 @@ dependencies {
     implementation(libs.converter.gson)
 
     //Gson
-    implementation (libs.gson)
+    implementation(libs.gson)
 
     //lottie
     implementation(libs.lottie)
@@ -85,6 +88,8 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.firestore.ktx)
+
+    //Credentials google and play service
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
