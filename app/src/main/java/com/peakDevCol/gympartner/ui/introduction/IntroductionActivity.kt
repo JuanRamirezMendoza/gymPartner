@@ -1,5 +1,6 @@
 package com.peakDevCol.gympartner.ui.introduction
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -121,6 +122,7 @@ class IntroductionActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun showError() {
         BasicDialog.create(
             this,

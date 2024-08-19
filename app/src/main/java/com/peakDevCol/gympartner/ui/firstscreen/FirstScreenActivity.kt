@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.peakDevCol.gympartner.R
-import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountActivity
 import com.peakDevCol.gympartner.ui.home.HomeActivity
 import com.peakDevCol.gympartner.ui.introduction.IntroductionActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +22,7 @@ class FirstScreenActivity : AppCompatActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             setTheme(R.style.Theme_GymPartner_Starting)
             splashScreen.setKeepOnScreenCondition { true }
         }
@@ -32,8 +31,8 @@ class FirstScreenActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
-        firstScreenViewModel.authUser.observe(this){
-            it.getContentIfNotHandled()?.let {auth ->
+        firstScreenViewModel.authUser.observe(this) {
+            it.getContentIfNotHandled()?.let { auth ->
                 goToNextScreen(auth)
             }
         }
@@ -46,7 +45,6 @@ class FirstScreenActivity : AppCompatActivity() {
             startActivity(IntroductionActivity.create(this))
         finish()
     }
-
 
 
 }
