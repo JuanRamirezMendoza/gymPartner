@@ -140,13 +140,15 @@ class IntroductionActivity : AppCompatActivity() {
             .addCredentialOption(getGoogleIdOption)
             .build()
         lifecycleScope.launch {
-            introductionViewModel.getCredentials(this@IntroductionActivity, request)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                introductionViewModel.getCredentials(this@IntroductionActivity, request)
+            }
         }
     }
 
     private fun goToHome() {
         startActivity(HomeActivity.create(this))
-
+        finish()
     }
 
     private fun goToSignIn() {
