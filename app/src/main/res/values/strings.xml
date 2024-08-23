@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">GymPartner</string>
+    <string name="app_name">Fitness Gym</string>
     <string name="web_client_id">519187967548-sdoin7msq1oleova34t4cqqpg6018dj1.apps.googleusercontent.com</string>
 
     <!--     Introduction buttons     !-->
@@ -36,6 +36,9 @@
     <string name="accept_login_google">Aceptar</string>
     <string name="title_login_google">¡Ups!, Error inesperado</string>
     <string name="supporting_text_login_google">Vuelve a intentarlo y verifica tu conexion a internet</string>
+    <string name="perfil">Perfil</string>
+    <string name="cerrar_sesion">cerrar sesion</string>
+    <string name="imagen">imagen</string>
 
 
 </resources>
