@@ -1,5 +1,7 @@
 package com.peakDevCol.gympartner.di
 
+import com.peakDevCol.gympartner.data.repository.HomeRepository
+import com.peakDevCol.gympartner.data.repository.HomeRepositoryImpl
 import com.peakDevCol.gympartner.data.repository.LoginRepository
 import com.peakDevCol.gympartner.data.repository.LoginRepositoryImpl
 import com.peakDevCol.gympartner.data.repository.SignInRepository
@@ -14,9 +16,12 @@ import dagger.hilt.components.SingletonComponent
 internal interface DataModule {
 
     @Binds
-    fun bindsMainRepository(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
+    fun bindsLoginRepository(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
 
     @Binds
-    fun bindsDetailRepository(signInRepositoryImpl: SignInRepositoryImpl): SignInRepository
+    fun bindsSignInRepository(signInRepositoryImpl: SignInRepositoryImpl): SignInRepository
+
+    @Binds
+    fun bindsHomeRepository(homeRepositoryImpl: HomeRepositoryImpl): HomeRepository
 
 }
