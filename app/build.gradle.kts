@@ -2,8 +2,9 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.hilt)
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.googleGmsGoogleServices)
+    kotlin("kapt")
 }
 
 android {
@@ -57,7 +58,7 @@ dependencies {
 
     //Dagger
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     //Splash
     implementation(libs.androidx.core.splashscreen)
@@ -96,6 +97,6 @@ dependencies {
 
     // Glide
     implementation(libs.glide)
-    kapt(libs.compiler)
+    ksp(libs.compiler)
 
 }
