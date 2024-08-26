@@ -67,8 +67,13 @@ class HomeActivity : AppCompatActivity() {
         setUpRecyclerView()
         initObservers()
         initListeners()
-        //getBodyPartList()
+        initCallServices()
         //getBodyPartExerciseList()
+    }
+
+    private fun initCallServices() {
+        homeViewModel.getLocalBodyPart()
+        getBodyPartList()
     }
 
     private fun getBodyPartExerciseList() {
@@ -106,7 +111,9 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initObservers() {
         homeViewModel.bodyPart.observe(this) {
-            Log.e("bodyPart", it.toString())
+            if (it != null) {
+                Log.e("bodyPart", it.toString())
+            }
         }
         homeViewModel.bodyPartExercises.observe(this) {
             Log.e("bodyPartExercises", it.toString())

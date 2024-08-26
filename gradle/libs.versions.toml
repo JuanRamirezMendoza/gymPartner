@@ -24,6 +24,7 @@ fragmentKtx = "1.8.2"
 coreSplashscreen = "1.0.1"
 navigationFragmentKtx = "2.7.7"
 lottie = "6.4.0"
+room = "2.6.1"
 
 firebaseAuth = "23.0.0"
 googleGmsGoogleServices = "4.4.2"
@@ -62,11 +63,14 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuth" }
 androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
-
+room-lib = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+roomx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = 'com.google.dagger.hilt.android', version.ref = "hilt" }
 ksp = { id = 'com.google.devtools.ksp', version.ref = "ksp" }
+roomPlugin = { id = 'androidx.room', version.ref = "room" }
 googleGmsGoogleServices = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
