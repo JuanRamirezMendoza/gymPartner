@@ -22,7 +22,7 @@ object RoomModule {
 
     @Provides
     @Singleton
-    fun provideMoshi(): Gson = Gson()
+    fun provideGson(): Gson = Gson()
 
     @Provides
     @Singleton
