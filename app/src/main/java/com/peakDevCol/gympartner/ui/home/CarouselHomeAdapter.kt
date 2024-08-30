@@ -9,8 +9,12 @@ import com.peakDevCol.gympartner.domain.ProviderTypeBodyPart
 import javax.inject.Inject
 
 
-class CarouselHomeAdapter @Inject constructor(private var list: List<ProviderTypeBodyPart>) :
-    RecyclerView.Adapter<CarouselHomeAdapter.CarouselHomeViewHolder>() {
+class CarouselHomeAdapter @Inject constructor(
+    private var list: List<ProviderTypeBodyPart>,
+    private val onItemHero: OnItemHero
+) : RecyclerView.Adapter<CarouselHomeAdapter.CarouselHomeViewHolder>() {
+
+    private var lastBodyPartCall = ""
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -26,14 +30,21 @@ class CarouselHomeAdapter @Inject constructor(private var list: List<ProviderTyp
             carouselImageView.setImageResource(selectImage(item))
             carouselTextView.text = selectText(item)
             carouselItemContainer.setOnMaskChangedListener { maskRect ->
+                val newBodyPartToCall = carouselTextView.text.toString()
+                if (maskRect.left == 0f &&
+                    maskRect.right == carouselItemContainer.width.toFloat() &&
+                    newBodyPartToCall != lastBodyPartCall) {
+                    lastBodyPartCall = newBodyPartToCall
+                    onItemHero.itemHero(item)
+                }
                 carouselTextView.translationX = maskRect.left
-                carouselTextView.alpha = lerp(1f, 0f, maskRect.left / 80f)
+                carouselTextView.alpha = lerp(maskRect.left / 80f)
             }
         }
     }
 
-    private fun lerp(start: Float, stop: Float, fraction: Float): Float {
-        return start + (stop - start) * fraction
+    private fun lerp(fraction: Float): Float {
+        return 1f + (0f - 1f) * fraction
     }
 
     private fun selectImage(item: ProviderTypeBodyPart): Int {
