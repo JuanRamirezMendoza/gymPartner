@@ -2,6 +2,7 @@ package com.peakDevCol.gympartner.domain
 
 import com.peakDevCol.gympartner.data.repository.HomeRepository
 import com.peakDevCol.gympartner.data.response.BodyPartExerciseResponse
+import retrofit2.Response
 import javax.inject.Inject
 
 
@@ -15,7 +16,7 @@ class BodyPartExerciseUseCase @Inject constructor(private val homeRepository: Ho
      * invoke it's a type of function that you can use only call the instance of class
      * for example, loginUseCase(juan@prueba.com, 123456)
      **/
-    suspend operator fun invoke(bodyPart: String): List<BodyPartExerciseResponse> {
+    suspend operator fun invoke(bodyPart: String): Response<List<BodyPartExerciseResponse>> {
         return homeRepository.callBodyPartExercises(bodyPart)
     }
 

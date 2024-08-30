@@ -1,8 +1,10 @@
 package com.peakDevCol.gympartner.ui.introduction
 
 import android.content.Context
+import android.os.CancellationSignal
 import android.util.Log
 import androidx.credentials.CredentialManager
+import androidx.credentials.CredentialManagerCallback
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
@@ -20,6 +22,8 @@ import com.peakDevCol.gympartner.domain.ProviderTypeLogin
 import com.peakDevCol.gympartner.domain.SaveAccountUseCase
 import com.peakDevCol.gympartner.ui.signin.model.UserSignIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -117,18 +121,24 @@ class IntroductionViewModel @Inject constructor(
     }
 
     fun getCredentials(context: Context, request: GetCredentialRequest) {
-        viewModelScope.launch {
-            try {
-                val result = credentialManager.getCredential(
-                    request = request,
-                    context = context,
-                )
-                handleSignIn(result)
-            } catch (e: GetCredentialException) {
-                handleFailure(e)
-            }
+        val cancellationSignal = CancellationSignal()
+        credentialManager.getCredentialAsync(
+            context = context,
+            request = request,
+            cancellationSignal = cancellationSignal,
+            executor = Dispatchers.IO.asExecutor(),
+            callback = object :
+                CredentialManagerCallback<GetCredentialResponse, GetCredentialException> {
+                override fun onError(e: GetCredentialException) {
+                    handleFailure(e)
+                }
 
-        }
+                override fun onResult(result: GetCredentialResponse) {
+                    handleSignIn(result)
+                }
+            }
+        )
     }
+
 
 }

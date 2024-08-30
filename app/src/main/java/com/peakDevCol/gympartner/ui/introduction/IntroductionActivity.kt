@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -34,9 +33,6 @@ class IntroductionActivity : AppCompatActivity() {
 
     @Inject
     lateinit var getGoogleIdOption: GetGoogleIdOption
-
-    @Inject
-    lateinit var credentialManager: CredentialManager
 
     companion object {
         fun create(context: Context) = Intent(context, IntroductionActivity::class.java)
