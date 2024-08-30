@@ -5,14 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.peakDevCol.gympartner.core.Event
+import com.peakDevCol.gympartner.core.ex.capitalizeFirstLetter
 import com.peakDevCol.gympartner.data.response.BodyPartExerciseResponse
 import com.peakDevCol.gympartner.domain.BodyPartExerciseUseCase
 import com.peakDevCol.gympartner.domain.ListBodyPartUseCase
 import com.peakDevCol.gympartner.domain.LocalListBodyPartUseCase
+import com.peakDevCol.gympartner.domain.ProviderTypeBodyPart
 import com.peakDevCol.gympartner.domain.SaveListBodyPartUseCase
 import com.peakDevCol.gympartner.domain.model.BodyPartModel
 import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -27,6 +30,10 @@ class HomeViewModel @Inject constructor(
     private val authFireBase: FirebaseAuth,
 ) : BaseFirstStepAccountViewModel() {
 
+    private val _viewState = MutableStateFlow<HomeViewState?>(null)
+    val viewState: StateFlow<HomeViewState?>
+        get() = _viewState
+
     private val _bodyPartState = MutableStateFlow<BodyPartModel?>(null)
     val bodyPartState: StateFlow<BodyPartModel?> = _bodyPartState
 
@@ -34,22 +41,19 @@ class HomeViewModel @Inject constructor(
     val navigateToIntroduction: LiveData<Event<Boolean>>
         get() = _navigateToIntroduction
 
-    private val _bodyPart = MutableLiveData<List<String>>()
-    val bodyPart: LiveData<List<String>>
-        get() = _bodyPart
-
     private val _bodyPartExercises = MutableLiveData<List<BodyPartExerciseResponse>>()
     val bodyPartExercises: LiveData<List<BodyPartExerciseResponse>>
         get() = _bodyPartExercises
 
-    suspend fun callBodyPart() {
-        val bodyParts = listBodyPartUseCase()
-        saveListBodyPartUseCase(BodyPartModel(bodyParts))
-        _bodyPart.postValue(bodyParts)
-    }
-
-    suspend fun callBodyPartExerciseList(bodyPart: String) {
-        _bodyPartExercises.postValue(bodyPartExerciseUseCase(bodyPart))
+    suspend fun callBodyPartExerciseList(bodyPart: ProviderTypeBodyPart) {
+        _viewState.value = HomeViewState.Loading
+        val response = bodyPartExerciseUseCase(bodyPart.name.lowercase().replace("_", " "))
+        if (response.isSuccessful) {
+            _bodyPartExercises.postValue(response.body() ?: emptyList())
+        } else {
+            _viewState.value = HomeViewState.Error
+        }
+        _viewState.value = null
     }
 
     fun logOut() {
@@ -60,11 +64,41 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getLocalBodyPart() {
-        viewModelScope.launch {
-            localListBodyPartUseCase().collect { bodyPart ->
-                _bodyPartState.value = bodyPart
+        _viewState.value = HomeViewState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            localListBodyPartUseCase().collect { bodyPartRoom ->
+                if (bodyPartRoom.bodyParts.isEmpty()) {
+                    val listBodyPartService = listBodyPartUseCase()
+                    if (listBodyPartService.isNotEmpty())
+                        saveListBodyPartUseCase(BodyPartModel(listBodyPartService))
+                }
+                _bodyPartState.value = bodyPartRoom
             }
+            _viewState.value = null
         }
+    }
+
+
+    fun setHomeViewState(state: HomeViewState?) {
+        _viewState.value = state
+    }
+
+    fun formatSecondaryMuscles(secondaryMuscles: List<String>): String {
+        var muscles = ""
+        secondaryMuscles.forEach {
+            muscles += "-${it.capitalizeFirstLetter()}\n"
+        }
+        return muscles
+    }
+
+    fun formatInstructions(instructions: List<String>): String {
+        var steps = ""
+        var numberOfSteps = 1
+        instructions.forEach {
+            steps += "$numberOfSteps." + it.capitalizeFirstLetter() + "\n\n"
+            numberOfSteps++
+        }
+        return steps
     }
 
 }
