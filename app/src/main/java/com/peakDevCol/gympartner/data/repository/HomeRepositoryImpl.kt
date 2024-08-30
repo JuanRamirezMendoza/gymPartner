@@ -5,6 +5,7 @@ import com.peakDevCol.gympartner.data.network.ExerciseService
 import com.peakDevCol.gympartner.data.response.BodyPartExerciseResponse
 import com.peakDevCol.gympartner.domain.model.BodyPartModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -29,8 +30,15 @@ class HomeRepositoryImpl @Inject constructor(
         local.insertBodyPartList(bodyPart)
     }
 
-    override fun getLocalBodyPart(): Flow<BodyPartModel> {
-        return local.getBodyPartList()
+    override fun getLocalBodyPart(): Flow<BodyPartModel> = flow {
+        local.getBodyPartList().collect { bodyPartRoom ->
+            if (bodyPartRoom.bodyParts.isEmpty()) {
+                val listBodyPartService = callBodyPart()
+                if (listBodyPartService.isNotEmpty())
+                    saveBodyPart(BodyPartModel(listBodyPartService))
+            }
+            emit(bodyPartRoom)
+        }
     }
 
 }

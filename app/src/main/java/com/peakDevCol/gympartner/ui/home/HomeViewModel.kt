@@ -8,10 +8,8 @@ import com.peakDevCol.gympartner.core.Event
 import com.peakDevCol.gympartner.core.ex.capitalizeFirstLetter
 import com.peakDevCol.gympartner.data.response.BodyPartExerciseResponse
 import com.peakDevCol.gympartner.domain.BodyPartExerciseUseCase
-import com.peakDevCol.gympartner.domain.ListBodyPartUseCase
-import com.peakDevCol.gympartner.domain.LocalListBodyPartUseCase
+import com.peakDevCol.gympartner.domain.GetListBodyPartUseCase
 import com.peakDevCol.gympartner.domain.ProviderTypeBodyPart
-import com.peakDevCol.gympartner.domain.SaveListBodyPartUseCase
 import com.peakDevCol.gympartner.domain.model.BodyPartModel
 import com.peakDevCol.gympartner.ui.basefirststepaccount.BaseFirstStepAccountViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,9 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val listBodyPartUseCase: ListBodyPartUseCase,
-    private val saveListBodyPartUseCase: SaveListBodyPartUseCase,
-    private val localListBodyPartUseCase: LocalListBodyPartUseCase,
+    private val localListBodyPartUseCase: GetListBodyPartUseCase,
     private val bodyPartExerciseUseCase: BodyPartExerciseUseCase,
     private val authFireBase: FirebaseAuth,
 ) : BaseFirstStepAccountViewModel() {
@@ -67,11 +63,6 @@ class HomeViewModel @Inject constructor(
         _viewState.value = HomeViewState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             localListBodyPartUseCase().collect { bodyPartRoom ->
-                if (bodyPartRoom.bodyParts.isEmpty()) {
-                    val listBodyPartService = listBodyPartUseCase()
-                    if (listBodyPartService.isNotEmpty())
-                        saveListBodyPartUseCase(BodyPartModel(listBodyPartService))
-                }
                 _bodyPartState.value = bodyPartRoom
             }
             _viewState.value = null

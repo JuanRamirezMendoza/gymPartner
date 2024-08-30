@@ -10,7 +10,7 @@ import javax.inject.Inject
  * The UseCase are the actions that the user can do it.
  * In this case, for example, the user makes a login.
  */
-class LocalListBodyPartUseCase @Inject constructor(private val homeRepository: HomeRepository) {
+class GetListBodyPartUseCase @Inject constructor(private val homeRepository: HomeRepository) {
 
     /**
      * invoke it's a type of function that you can use only call the instance of class
