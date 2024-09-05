@@ -39,8 +39,6 @@ class IntroductionActivity : AppCompatActivity() {
     @Inject
     lateinit var getGoogleIdOption: GetGoogleIdOption
 
-    @Inject
-    lateinit var credentialManager: CredentialManager
     private var backPressedOnce = false
     private val backPressTimeLimit = 2000L // 2 seconds
 
