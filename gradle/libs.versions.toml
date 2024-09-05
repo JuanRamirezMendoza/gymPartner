@@ -1,5 +1,6 @@
 [versions]
 agp = "8.4.2"
+appcompatVersion = "1.7.0"
 credentials = "1.3.0-rc01"
 firebaseBom = "33.2.0"
 glide = "4.16.0"
@@ -33,6 +34,7 @@ legacySupportV4 = "1.0.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
+androidx-appcompat-v160alpha04 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }

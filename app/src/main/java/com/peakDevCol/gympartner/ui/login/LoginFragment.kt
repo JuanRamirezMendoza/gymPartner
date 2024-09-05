@@ -130,6 +130,7 @@ class LoginFragment : Fragment() {
 
     private fun goToHome() {
         startActivity(HomeActivity.create(requireActivity()))
+        requireActivity().finish()
     }
 
 }

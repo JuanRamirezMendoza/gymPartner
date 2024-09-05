@@ -105,5 +105,6 @@ dependencies {
     ksp(libs.room.compiler)
     //Kotlin Extensions and Coroutines support for Room
     implementation(libs.roomx)
+    implementation(libs.androidx.appcompat.v160alpha04)
 
 }

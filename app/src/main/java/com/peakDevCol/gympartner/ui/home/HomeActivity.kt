@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +29,7 @@ import com.peakDevCol.gympartner.R
 import com.peakDevCol.gympartner.core.dialog.BasicDialog
 import com.peakDevCol.gympartner.core.dialog.LoadingDialog
 import com.peakDevCol.gympartner.core.ex.capitalizeFirstLetter
+import com.peakDevCol.gympartner.core.ex.toast
 import com.peakDevCol.gympartner.data.response.BodyPartExerciseResponse
 import com.peakDevCol.gympartner.databinding.ActivityHomeBinding
 import com.peakDevCol.gympartner.domain.ProviderTypeBodyPart
@@ -39,6 +43,8 @@ import kotlinx.coroutines.launch
 class HomeActivity : AppCompatActivity(), OnItemHero {
 
     private lateinit var binding: ActivityHomeBinding
+    private var backPressedOnce = false
+    private val backPressTimeLimit = 2000L // 2 seconds
 
     private lateinit var carouselHomeAdapter: CarouselHomeAdapter
     private val homeViewModel: HomeViewModel by viewModels()
@@ -74,7 +80,7 @@ class HomeActivity : AppCompatActivity(), OnItemHero {
             insets
         }
         initUi()
-
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
     private fun initUi() {
@@ -244,5 +250,18 @@ class HomeActivity : AppCompatActivity(), OnItemHero {
         }
     }
 
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if(backPressedOnce){
+                finish()
+            }
+            backPressedOnce = true
+            toast(getString(R.string.press_back_again_to_exit))
 
+            // Reset the backPressedOnce flag after 2 seconds
+            Handler(Looper.getMainLooper()).postDelayed({
+                backPressedOnce = false
+            }, backPressTimeLimit)
+        }
+    }
 }
