@@ -54,6 +54,15 @@
     <string name="accept_default_error">Aceptar</string>
     <string name="title_default_error">¡Ups, Error!</string>
     <string name="supporting_text_default_error">Ha ocurrido un error inesperado</string>
+    <string name="name_lastname">Nombres y apellidos</string>
+    <string name="gender">Genero</string>
+    <string name="men">Hombre</string>
+    <string name="women">Mujer</string>
+    <string name="pick_birth_day">Selecciona el dia de tu nacimiento</string>
+    <string name="peso_en_kg">Peso (en Kg)</string>
+    <string name="size_meters">Estatura (en m)</string>
+    <string name="save">Guardar</string>
+    <string name="profile_img">profile img</string>
 
 
 </resources>

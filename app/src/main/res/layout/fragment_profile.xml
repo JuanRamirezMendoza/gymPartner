@@ -26,6 +26,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="11dp"
                 android:backgroundTint="@color/background"
+                android:contentDescription="@string/profile_img"
                 android:src="@drawable/user" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -34,7 +35,7 @@
             android:id="@+id/name_and_last_name_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/nombres_y_apellidos"
+            android:hint="@string/name_lastname"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="11dp"
                 android:paddingEnd="11dp"
-                android:text="@string/hombre" />
+                android:text="@string/men" />
 
             <RadioButton
                 android:id="@+id/radio_button_women"
@@ -84,7 +85,7 @@
                 android:layout_height="match_parent"
                 android:paddingStart="11dp"
                 android:paddingEnd="11dp"
-                android:text="@string/mujer" />
+                android:text="@string/women" />
         </RadioGroup>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -107,7 +108,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="@string/weight_en_kg"
+            android:hint="@string/peso_en_kg"
             android:padding="16dp"
             app:layout_constraintEnd_toStartOf="@id/size_text_input_layout"
             app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +127,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="@string/size_en_metros"
+            android:hint="@string/size_meters"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/peso_text_input_layout"

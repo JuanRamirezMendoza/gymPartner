@@ -5,15 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
-import androidx.navigation.findNavController
 import com.peakDevCol.gympartner.R
 import com.peakDevCol.gympartner.core.ex.toast
 import com.peakDevCol.gympartner.databinding.ActivityHomeBinding
