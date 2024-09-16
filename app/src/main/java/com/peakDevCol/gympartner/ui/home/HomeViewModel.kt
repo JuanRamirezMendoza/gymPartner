@@ -43,12 +43,12 @@ class HomeViewModel @Inject constructor(
 
     suspend fun callBodyPartExerciseList(bodyPart: ProviderTypeBodyPart) {
         _viewState.value = HomeViewState.Loading
-        val response = bodyPartExerciseUseCase(bodyPart.name.lowercase().replace("_", " "))
+        /*val response = bodyPartExerciseUseCase(bodyPart.name.lowercase().replace("_", " "))
         if (response.isSuccessful) {
             _bodyPartExercises.postValue(response.body() ?: emptyList())
         } else {
             _viewState.value = HomeViewState.Error
-        }
+        }*/
         _viewState.value = null
     }
 
