@@ -4,6 +4,3 @@ sealed class IntroductionViewState {
     data object Loading : IntroductionViewState()
     data object Error : IntroductionViewState()
 }
-
-
-

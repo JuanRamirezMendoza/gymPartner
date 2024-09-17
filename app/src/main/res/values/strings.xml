@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">GymPartner</string>
+    <string name="app_name">Fitness Gym</string>
     <string name="web_client_id">519187967548-sdoin7msq1oleova34t4cqqpg6018dj1.apps.googleusercontent.com</string>
 
     <!--     Introduction buttons     !-->
@@ -36,6 +36,35 @@
     <string name="accept_login_google">Aceptar</string>
     <string name="title_login_google">¡Ups!, Error inesperado</string>
     <string name="supporting_text_login_google">Vuelve a intentarlo y verifica tu conexion a internet</string>
+
+    <!--     Top app bar options    !-->
+    <string name="perfil">Perfil</string>
+    <string name="cerrar_sesion">cerrar sesion</string>
+
+    <!--     Image Carousel    !-->
+    <string name="imagen">imagen</string>
+    <string name="press_back_again_to_exit">Press back again to exit</string>
+
+    <!--     Dialog Close Session      !-->
+    <string name="accept_close_session">Aceptar</string>
+    <string name="title_close_session">Cerrar sesion</string>
+    <string name="supporting_text_close_session">¿Estas seguro de cerrar sesion?</string>
+
+    <!--     Default dialog error      !-->
+    <string name="accept_default_error">Aceptar</string>
+    <string name="title_default_error">¡Ups, Error!</string>
+    <string name="supporting_text_default_error">Ha ocurrido un error inesperado</string>
+    <string name="name_lastname">Nombres y apellidos</string>
+    <string name="gender">Genero</string>
+    <string name="men">Hombre</string>
+    <string name="women">Mujer</string>
+    <string name="pick_birth_day">Selecciona el dia de tu nacimiento</string>
+    <string name="peso_en_kg">Peso (en Kg)</string>
+    <string name="size_meters">Estatura (en m)</string>
+    <string name="save">Guardar</string>
+    <string name="profile_img">profile img</string>
+    <string name="ejercice_img">ejercice img</string>
+    <string name="birth_day_picker">Seleccione la fecha de su nacimiento</string>
 
 
 </resources>

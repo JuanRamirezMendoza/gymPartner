@@ -2,8 +2,9 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.hilt)
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.googleGmsGoogleServices)
+    kotlin("kapt")
 }
 
 android {
@@ -57,7 +58,7 @@ dependencies {
 
     //Dagger
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     //Splash
     implementation(libs.androidx.core.splashscreen)
@@ -94,5 +95,16 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
 
+    // Glide
+    implementation(libs.glide)
+    ksp(libs.compiler)
+
+    //Room
+    implementation(libs.room.lib)
+    // To use Kotlin Symbol Processing (KSP)
+    ksp(libs.room.compiler)
+    //Kotlin Extensions and Coroutines support for Room
+    implementation(libs.roomx)
+    implementation(libs.androidx.appcompat.v160alpha04)
 
 }
