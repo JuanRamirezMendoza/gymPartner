@@ -2,16 +2,18 @@ package com.peakDevCol.gympartner.ui.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -25,6 +27,7 @@ import com.peakDevCol.gympartner.R
 import com.peakDevCol.gympartner.core.dialog.BasicDialog
 import com.peakDevCol.gympartner.core.dialog.LoadingDialog
 import com.peakDevCol.gympartner.core.ex.capitalizeFirstLetter
+import com.peakDevCol.gympartner.core.ex.toast
 import com.peakDevCol.gympartner.data.response.BodyPartExerciseResponse
 import com.peakDevCol.gympartner.databinding.FragmentHomeBinding
 import com.peakDevCol.gympartner.domain.ProviderTypeBodyPart
@@ -38,9 +41,10 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment(), OnItemHero {
 
     private lateinit var binding: FragmentHomeBinding
-
+    private var backPressedOnce = false
+    private val backPressTimeLimit = 2000L // 2 seconds
     private lateinit var carouselHomeAdapter: CarouselHomeAdapter
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by activityViewModels()
 
     private val showLoading = LoadingDialog
 
@@ -50,11 +54,13 @@ class HomeFragment : Fragment(), OnItemHero {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        binding.target.setOnClickListener{
-            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
-        }
-        initUi()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initUi()
+        callBackButton()
     }
 
     private val bodyPart = listOf(
@@ -70,28 +76,10 @@ class HomeFragment : Fragment(), OnItemHero {
         ProviderTypeBodyPart.WAIST,
     )
 
-    private fun initListeners() {
-        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.perfil -> {
-                    Log.e("PRUEBA SEBASTIAN   ","entró perfil tap")
-                    findNavController().navigate(R.id.profileFragment)
-                    true
-                }
 
-                R.id.logout -> {
-                    showExitDialog()
-                    true
-                }
-
-                else -> false
-            }
-        }
-    }
 
     private fun initUi() {
         initCallServices()
-        initListeners()
         setUpRecyclerView()
         initObservers()
     }
@@ -213,21 +201,6 @@ class HomeFragment : Fragment(), OnItemHero {
         requireActivity().finish()
     }
 
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun showExitDialog() {
-        BasicDialog.create(
-            requireContext(),
-            resources.getDrawable(R.drawable.dialog_bg),
-            resources.getString(R.string.title_close_session),
-            resources.getString(R.string.supporting_text_close_session),
-            resources.getString(R.string.accept_close_session)
-        ) {
-            homeViewModel.logOut()
-            it.dismiss()
-        }
-    }
-
     override fun itemHero(heroBodyPart: ProviderTypeBodyPart) {
         getBodyPartExerciseList(heroBodyPart)
     }
@@ -240,4 +213,18 @@ class HomeFragment : Fragment(), OnItemHero {
         }
     }
 
+    private fun callBackButton() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){
+            if(backPressedOnce){
+                requireActivity().finish()
+            }
+            backPressedOnce = true
+            requireActivity().toast(getString(R.string.press_back_again_to_exit))
+
+            // Reset the backPressedOnce flag after 2 seconds
+            Handler(Looper.getMainLooper()).postDelayed({
+                backPressedOnce = false
+            }, backPressTimeLimit)
+        }
+    }
 }

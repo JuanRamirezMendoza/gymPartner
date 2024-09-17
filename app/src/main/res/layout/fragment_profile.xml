@@ -14,7 +14,7 @@
             android:id="@+id/card_image"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_margin="8dp"
+            android:layout_marginTop="30dp"
             android:backgroundTint="@color/background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,6 @@
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="11dp"
                 android:backgroundTint="@color/background"
                 android:contentDescription="@string/profile_img"
                 android:src="@drawable/user" />
@@ -53,10 +52,10 @@
             android:id="@+id/text_view_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
             android:text="@string/gender"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
-            app:layout_constraintEnd_toStartOf="@id/radioGroup"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/name_and_last_name_text_input_layout" />
 
@@ -65,10 +64,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkedButton="@+id/radio_button_men"
+            android:layout_marginEnd="30dp"
             android:orientation="horizontal"
-            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/text_view_gender"
             app:layout_constraintTop_toBottomOf="@+id/name_and_last_name_text_input_layout">
 
             <RadioButton
@@ -89,7 +87,7 @@
         </RadioGroup>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/date_picker"
+            android:id="@+id/date_picker_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -112,7 +110,7 @@
             android:padding="16dp"
             app:layout_constraintEnd_toStartOf="@id/size_text_input_layout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_picker">
+            app:layout_constraintTop_toBottomOf="@+id/date_picker_button">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_weight"
@@ -131,7 +129,7 @@
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/peso_text_input_layout"
-            app:layout_constraintTop_toBottomOf="@+id/date_picker">
+            app:layout_constraintTop_toBottomOf="@+id/date_picker_button">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_size"

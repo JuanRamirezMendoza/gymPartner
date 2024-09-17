@@ -63,6 +63,8 @@
     <string name="size_meters">Estatura (en m)</string>
     <string name="save">Guardar</string>
     <string name="profile_img">profile img</string>
+    <string name="ejercice_img">ejercice img</string>
+    <string name="birth_day_picker">Seleccione la fecha de su nacimiento</string>
 
 
 </resources>
